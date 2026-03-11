@@ -1,4 +1,4 @@
-# SID Forms
+# Choreia Forms
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![GitHub Pages](https://img.shields.io/badge/使ってみる-GitHub%20Pages-brightgreen)](https://choreia.github.io/Form/)
@@ -23,7 +23,7 @@
 
 ## Typeformとの比較
 
-| | SID Forms | Typeform | Google Forms |
+| | Choreia Forms | Typeform | Google Forms |
 |---|---|---|---|
 | 料金 | **無料** | $25/月〜 | 無料 |
 | デザイン自由度 | **カラー・フォント・角丸すべてカスタム** | テンプレートのみ | ほぼなし |

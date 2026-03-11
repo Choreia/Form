@@ -3,36 +3,44 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SID Forms — Beautiful Form Builder</title>
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com https://apis.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; connect-src https://www.googleapis.com https://accounts.google.com https://sheets.googleapis.com https://api.anthropic.com; frame-src https://accounts.google.com 'self' blob:; img-src 'self' https://*.googleusercontent.com data:; font-src https://fonts.gstatic.com;">
+<title>Choreia Forms — Beautiful Form Builder</title>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com https://apis.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; connect-src https://www.googleapis.com https://accounts.google.com https://sheets.googleapis.com https://api.anthropic.com; frame-src https://accounts.google.com 'self' blob:; img-src 'self' https://*.googleusercontent.com https://avatars.githubusercontent.com data:; font-src https://fonts.gstatic.com;">
 <style>
-/* ========== Reset & Variables ========== */
+/* ========== Reset & Variables — Choreia Brand ========== */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg: #0a0a0a;
-  --surface: #141414;
-  --surface2: #1e1e1e;
-  --surface3: #282828;
-  --border: #333;
-  --text: #f0f0f0;
-  --text2: #999;
-  --accent: #6366f1;
-  --accent-light: #818cf8;
-  --accent-dark: #4f46e5;
-  --accent-glow: rgba(99, 102, 241, 0.15);
-  --danger: #ef4444;
-  --success: #22c55e;
-  --warning: #f59e0b;
-  --radius: 12px;
-  --radius-sm: 8px;
-  --shadow: 0 4px 24px rgba(0,0,0,0.4);
+  /* Choreia earthy palette */
+  --bg: #faf8f5;
+  --surface: #ffffff;
+  --surface2: #f3efe9;
+  --surface3: #e8e2d9;
+  --border: #d4cdc2;
+  --text: #2c2418;
+  --text2: #8a7e6e;
+  --accent: #a0522d;
+  --accent-light: #b8693f;
+  --accent-dark: #8b4526;
+  --accent-glow: rgba(160, 82, 45, 0.1);
+  --green: #4a6741;
+  --green-light: #5a7d4f;
+  --green-glow: rgba(74, 103, 65, 0.1);
+  --gold: #b8860b;
+  --gold-light: #d4a017;
+  --gold-glow: rgba(184, 134, 11, 0.1);
+  --danger: #c0392b;
+  --success: #4a6741;
+  --warning: #b8860b;
+  --radius: 10px;
+  --radius-sm: 6px;
+  --shadow: 0 2px 16px rgba(44, 36, 24, 0.08);
+  --shadow-lg: 0 8px 32px rgba(44, 36, 24, 0.12);
   --transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 html, body {
   height: 100%;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family: 'Noto Sans JP', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   background: var(--bg);
   color: var(--text);
   overflow: hidden;
@@ -43,18 +51,15 @@ html, body {
 
 .header {
   display: flex; align-items: center; justify-content: space-between;
-  padding: 12px 24px; background: var(--surface);
+  padding: 10px 24px; background: var(--surface);
   border-bottom: 1px solid var(--border); z-index: 100; flex-shrink: 0;
+  box-shadow: 0 1px 3px rgba(44, 36, 24, 0.04);
 }
 
-.logo { display: flex; align-items: center; gap: 10px; font-size: 18px; font-weight: 700; letter-spacing: -0.5px; }
-
-.logo-icon {
-  width: 32px; height: 32px;
-  background: linear-gradient(135deg, var(--accent), #a855f7);
-  border-radius: 8px; display: flex; align-items: center; justify-content: center;
-  font-size: 16px; color: white;
-}
+.logo { display: flex; align-items: center; gap: 10px; font-size: 17px; font-weight: 700; color: var(--text); letter-spacing: -0.3px; }
+.logo-img { width: 32px; height: 32px; border-radius: 8px; }
+.logo span { font-family: 'Inter', sans-serif; }
+.logo .logo-sub { font-size: 12px; font-weight: 500; color: var(--text2); margin-left: 4px; }
 
 .header-center { display: flex; align-items: center; gap: 12px; }
 .header-actions { display: flex; gap: 8px; align-items: center; }
@@ -66,9 +71,9 @@ html, body {
   background: var(--surface2); border-radius: 20px; border: 1px solid var(--border);
 }
 .user-avatar { width: 28px; height: 28px; border-radius: 50%; }
-.user-name { font-size: 12px; font-weight: 600; }
+.user-name { font-size: 12px; font-weight: 600; color: var(--text); }
 .sheets-link {
-  font-size: 11px; color: var(--accent-light); text-decoration: none;
+  font-size: 11px; color: var(--green); text-decoration: none;
   display: flex; align-items: center; gap: 4px;
 }
 .sheets-link:hover { text-decoration: underline; }
@@ -81,26 +86,27 @@ html, body {
   border-right: 1px solid var(--border); display: flex; flex-direction: column; overflow: hidden;
 }
 
-.panel-tabs { display: flex; border-bottom: 1px solid var(--border); flex-shrink: 0; }
+.panel-tabs { display: flex; border-bottom: 1px solid var(--border); flex-shrink: 0; background: var(--surface); }
 
 .panel-tab {
-  flex: 1; padding: 12px 16px; text-align: center; font-size: 13px; font-weight: 600;
+  flex: 1; padding: 11px 16px; text-align: center; font-size: 13px; font-weight: 600;
   color: var(--text2); cursor: pointer; border-bottom: 2px solid transparent; transition: var(--transition);
 }
 .panel-tab:hover { color: var(--text); }
-.panel-tab.active { color: var(--accent-light); border-bottom-color: var(--accent); }
+.panel-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
 
 .panel-content { flex: 1; overflow-y: auto; padding: 16px; }
-.panel-content::-webkit-scrollbar { width: 6px; }
+.panel-content::-webkit-scrollbar { width: 5px; }
 .panel-content::-webkit-scrollbar-track { background: transparent; }
 .panel-content::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
 
 /* ========== AI Section ========== */
-.ai-section { padding: 16px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
+.ai-section { padding: 14px 16px; border-bottom: 1px solid var(--border); flex-shrink: 0; background: linear-gradient(135deg, rgba(160,82,45,0.04), rgba(74,103,65,0.04)); }
+.ai-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--accent); margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
 .ai-input-wrap { display: flex; gap: 8px; align-items: flex-end; }
 
 .ai-input {
-  flex: 1; padding: 10px 14px; background: var(--surface2); border: 1px solid var(--border);
+  flex: 1; padding: 10px 14px; background: var(--surface); border: 1px solid var(--border);
   border-radius: var(--radius-sm); color: var(--text); font-size: 13px; resize: none;
   min-height: 40px; max-height: 100px; outline: none; transition: var(--transition); font-family: inherit;
 }
@@ -121,17 +127,16 @@ html, body {
 .btn-ghost { background: transparent; color: var(--text2); padding: 6px 10px; }
 .btn-ghost:hover { color: var(--text); background: var(--surface2); }
 .btn-danger { background: transparent; color: var(--danger); padding: 6px 10px; }
-.btn-danger:hover { background: rgba(239, 68, 68, 0.1); }
+.btn-danger:hover { background: rgba(192, 57, 43, 0.08); }
 .btn-icon { width: 36px; height: 36px; padding: 0; border-radius: var(--radius-sm); }
-.btn-publish { background: linear-gradient(135deg, var(--accent), #a855f7); color: white; padding: 8px 20px; }
-.btn-publish:hover { opacity: 0.9; transform: translateY(-1px); }
+.btn-publish { background: var(--green); color: white; padding: 8px 20px; }
+.btn-publish:hover { background: var(--green-light); transform: translateY(-1px); }
 
 .btn-google {
-  background: white; color: #333; border: 1px solid #ddd; padding: 10px 20px;
-  font-size: 14px; font-weight: 600; border-radius: 8px; gap: 10px;
+  background: white; color: #333; border: 1px solid var(--border); padding: 9px 18px;
+  font-size: 13px; font-weight: 600; border-radius: var(--radius-sm); gap: 8px;
 }
-.btn-google:hover { background: #f5f5f5; }
-.btn-google img { width: 20px; height: 20px; }
+.btn-google:hover { background: var(--surface2); border-color: var(--text2); }
 
 /* ========== Form Title ========== */
 .form-title-section { margin-bottom: 20px; }
@@ -141,7 +146,7 @@ html, body {
   border-radius: var(--radius-sm); color: var(--text); font-size: 16px; font-weight: 700;
   outline: none; transition: var(--transition); font-family: inherit;
 }
-.form-title-input:focus { border-color: var(--accent); }
+.form-title-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
 
 .form-desc-input {
   width: 100%; padding: 8px 12px; margin-top: 8px; background: var(--surface2);
@@ -154,17 +159,17 @@ html, body {
 .question-list { display: flex; flex-direction: column; gap: 8px; }
 
 .question-card {
-  background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius);
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
   padding: 14px; cursor: grab; transition: var(--transition); position: relative;
 }
-.question-card:hover { border-color: var(--text2); }
+.question-card:hover { border-color: var(--text2); box-shadow: var(--shadow); }
 .question-card.active { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
 .question-card.dragging { opacity: 0.5; }
 .question-card.drag-over { border-color: var(--accent-light); border-style: dashed; }
 
 .question-header { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
-.question-drag { color: var(--text2); cursor: grab; font-size: 14px; flex-shrink: 0; }
-.question-type-badge { font-size: 11px; padding: 2px 8px; border-radius: 10px; background: var(--accent-glow); color: var(--accent-light); font-weight: 600; }
+.question-drag { color: var(--border); cursor: grab; font-size: 14px; flex-shrink: 0; }
+.question-type-badge { font-size: 11px; padding: 2px 8px; border-radius: 10px; background: var(--accent-glow); color: var(--accent); font-weight: 600; }
 .question-actions { margin-left: auto; display: flex; gap: 4px; }
 
 .question-label-input {
@@ -173,7 +178,7 @@ html, body {
   outline: none; transition: var(--transition); font-family: inherit;
 }
 .question-label-input:hover { border-color: var(--border); }
-.question-label-input:focus { border-color: var(--accent); background: var(--bg); }
+.question-label-input:focus { border-color: var(--accent); background: var(--surface2); }
 
 .question-meta { display: flex; align-items: center; gap: 12px; margin-top: 8px; }
 .question-meta label { font-size: 12px; color: var(--text2); display: flex; align-items: center; gap: 4px; }
@@ -187,7 +192,7 @@ html, body {
 }
 .toggle-slider::before {
   content: ''; position: absolute; width: 16px; height: 16px; left: 2px; top: 2px;
-  background: white; border-radius: 50%; transition: var(--transition);
+  background: white; border-radius: 50%; transition: var(--transition); box-shadow: 0 1px 3px rgba(0,0,0,0.15);
 }
 .toggle input:checked + .toggle-slider { background: var(--accent); }
 .toggle input:checked + .toggle-slider::before { transform: translateX(14px); }
@@ -195,26 +200,26 @@ html, body {
 /* Options editor */
 .options-editor { margin-top: 8px; display: flex; flex-direction: column; gap: 4px; }
 .option-row { display: flex; align-items: center; gap: 6px; }
-.option-input { flex: 1; padding: 5px 8px; background: var(--bg); border: 1px solid var(--border); border-radius: 4px; color: var(--text); font-size: 12px; outline: none; font-family: inherit; }
+.option-input { flex: 1; padding: 5px 8px; background: var(--surface2); border: 1px solid var(--border); border-radius: 4px; color: var(--text); font-size: 12px; outline: none; font-family: inherit; }
 .option-input:focus { border-color: var(--accent); }
-.add-option-btn { padding: 4px 8px; font-size: 12px; color: var(--accent-light); background: transparent; border: 1px dashed var(--border); border-radius: 4px; cursor: pointer; transition: var(--transition); margin-top: 4px; font-family: inherit; }
+.add-option-btn { padding: 4px 8px; font-size: 12px; color: var(--accent); background: transparent; border: 1px dashed var(--border); border-radius: 4px; cursor: pointer; transition: var(--transition); margin-top: 4px; font-family: inherit; }
 .add-option-btn:hover { border-color: var(--accent); background: var(--accent-glow); }
 
 /* Add question */
 .add-question-area { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 6px; }
-.add-q-btn { padding: 8px 12px; font-size: 12px; background: var(--surface2); border: 1px dashed var(--border); border-radius: var(--radius-sm); color: var(--text2); cursor: pointer; transition: var(--transition); font-family: inherit; }
-.add-q-btn:hover { border-color: var(--accent); color: var(--accent-light); background: var(--accent-glow); }
+.add-q-btn { padding: 8px 12px; font-size: 12px; background: var(--surface); border: 1px dashed var(--border); border-radius: var(--radius-sm); color: var(--text2); cursor: pointer; transition: var(--transition); font-family: inherit; }
+.add-q-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-glow); }
 
 /* ========== Design Tab ========== */
 .design-group { margin-bottom: 20px; }
-.design-group-title { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text2); margin-bottom: 10px; }
+.design-group-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text2); margin-bottom: 10px; }
 
 .theme-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
 .theme-card { aspect-ratio: 1; border-radius: var(--radius-sm); border: 2px solid var(--border); cursor: pointer; transition: var(--transition); overflow: hidden; position: relative; }
 .theme-card:hover { border-color: var(--text2); transform: scale(1.03); }
 .theme-card.active { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
 .theme-card-inner { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; padding: 8px; }
-.theme-card-name { position: absolute; bottom: 0; left: 0; right: 0; padding: 4px; font-size: 10px; font-weight: 600; text-align: center; background: rgba(0,0,0,0.6); color: white; }
+.theme-card-name { position: absolute; bottom: 0; left: 0; right: 0; padding: 4px; font-size: 10px; font-weight: 600; text-align: center; background: rgba(44,36,24,0.7); color: white; }
 
 .color-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
 .color-row label { font-size: 13px; color: var(--text2); min-width: 80px; }
@@ -234,41 +239,42 @@ html, body {
 /* ========== Google Sheets Status ========== */
 .sheets-status {
   display: flex; align-items: center; gap: 8px; padding: 10px 14px;
-  background: var(--accent-glow); border: 1px solid rgba(99,102,241,0.3);
+  background: var(--green-glow); border: 1px solid rgba(74,103,65,0.2);
   border-radius: var(--radius-sm); margin-bottom: 12px; font-size: 12px;
 }
-.sheets-status .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--success); flex-shrink: 0; }
+.sheets-status .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); flex-shrink: 0; }
+.sheets-status.disconnected { background: var(--surface2); border-color: var(--border); }
 .sheets-status.disconnected .dot { background: var(--text2); }
 
 /* ========== Right Panel ========== */
 .panel-right { flex: 1; background: var(--bg); display: flex; flex-direction: column; overflow: hidden; }
 .preview-toolbar { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 16px; border-bottom: 1px solid var(--border); background: var(--surface); flex-shrink: 0; }
 
-.device-btn { padding: 6px 12px; font-size: 12px; background: transparent; border: 1px solid var(--border); border-radius: 6px; color: var(--text2); cursor: pointer; transition: var(--transition); font-family: inherit; }
+.device-btn { padding: 6px 12px; font-size: 12px; background: transparent; border: 1px solid var(--border); border-radius: var(--radius-sm); color: var(--text2); cursor: pointer; transition: var(--transition); font-family: inherit; }
 .device-btn:hover { color: var(--text); border-color: var(--text2); }
-.device-btn.active { color: var(--accent-light); border-color: var(--accent); background: var(--accent-glow); }
+.device-btn.active { color: var(--accent); border-color: var(--accent); background: var(--accent-glow); }
 
 .preview-container { flex: 1; display: flex; align-items: flex-start; justify-content: center; padding: 24px; overflow-y: auto; }
-.preview-frame { width: 100%; max-width: 800px; min-height: 600px; border-radius: var(--radius); overflow: hidden; transition: max-width 0.3s ease; box-shadow: var(--shadow); }
+.preview-frame { width: 100%; max-width: 800px; min-height: 600px; border-radius: var(--radius); overflow: hidden; transition: max-width 0.3s ease; box-shadow: var(--shadow-lg); }
 .preview-frame.mobile { max-width: 375px; }
 .preview-frame.tablet { max-width: 768px; }
 .preview-iframe { width: 100%; min-height: 600px; border: none; border-radius: var(--radius); }
 
 /* ========== Modal ========== */
-.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); display: flex; align-items: center; justify-content: center; z-index: 1000; opacity: 0; pointer-events: none; transition: opacity 0.2s; }
+.modal-overlay { position: fixed; inset: 0; background: rgba(44,36,24,0.5); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; z-index: 1000; opacity: 0; pointer-events: none; transition: opacity 0.2s; }
 .modal-overlay.active { opacity: 1; pointer-events: all; }
-.modal { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; width: 480px; max-width: 90vw; max-height: 80vh; overflow-y: auto; box-shadow: var(--shadow); }
+.modal { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; width: 480px; max-width: 90vw; max-height: 80vh; overflow-y: auto; box-shadow: var(--shadow-lg); }
 .modal h2 { font-size: 18px; margin-bottom: 16px; }
 .modal-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 20px; }
 
 /* ========== Loading / Toast ========== */
-.ai-loading { display: flex; align-items: center; gap: 8px; padding: 10px 14px; font-size: 13px; color: var(--accent-light); }
+.ai-loading { display: flex; align-items: center; gap: 8px; padding: 10px 14px; font-size: 13px; color: var(--accent); }
 .spinner { width: 16px; height: 16px; border: 2px solid var(--accent-glow); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.6s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
 .toast { position: fixed; bottom: 24px; right: 24px; padding: 12px 20px; border-radius: var(--radius-sm); font-size: 13px; font-weight: 600; z-index: 2000; transform: translateY(100px); opacity: 0; transition: all 0.3s ease; }
 .toast.show { transform: translateY(0); opacity: 1; }
-.toast.success { background: var(--success); color: white; }
+.toast.success { background: var(--green); color: white; }
 .toast.error { background: var(--danger); color: white; }
 
 @media (max-width: 900px) {
@@ -286,14 +292,14 @@ html, body {
   <!-- Header -->
   <header class="header">
     <div class="logo">
-      <div class="logo-icon">S</div>
-      <span>SID Forms</span>
+      <img class="logo-img" src="https://avatars.githubusercontent.com/u/267019000?v=4" alt="Choreia">
+      <span>Choreia<span class="logo-sub">Forms</span></span>
     </div>
     <div class="header-center">
       <!-- Signed out -->
       <div id="authSignedOut">
         <button class="btn btn-google" onclick="handleSignIn()">
-          <svg width="20" height="20" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.27-4.74 3.27-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.27-4.74 3.27-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
           Googleでログイン
         </button>
       </div>
@@ -323,12 +329,16 @@ html, body {
     <div class="panel-left">
       <!-- AI Section -->
       <div class="ai-section">
+        <div class="ai-label">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          AIアシスタント
+        </div>
         <div class="ai-input-wrap">
           <textarea class="ai-input" id="aiInput" rows="1"
-            placeholder="AIに指示: 「美容院向けの予約フォーム」「もっとカジュアルに」"
+            placeholder="「美容院の予約フォーム」「もっとカジュアルに」"
             onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();generateWithAI()}"></textarea>
           <button class="btn btn-primary btn-icon" onclick="generateWithAI()" id="aiBtn" title="AI生成">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
           </button>
         </div>
         <div id="aiStatus"></div>
@@ -369,15 +379,15 @@ html, body {
         </div>
         <div class="design-group">
           <div class="design-group-title">カラー</div>
-          <div class="color-row"><label>メインカラー</label><input type="color" class="color-picker" id="colorPrimary" value="#6366f1" onchange="updateThemeColor('primary', this.value)"></div>
-          <div class="color-row"><label>背景色</label><input type="color" class="color-picker" id="colorBg" value="#ffffff" onchange="updateThemeColor('bg', this.value)"></div>
-          <div class="color-row"><label>文字色</label><input type="color" class="color-picker" id="colorText" value="#1a1a1a" onchange="updateThemeColor('text', this.value)"></div>
+          <div class="color-row"><label>メインカラー</label><input type="color" class="color-picker" id="colorPrimary" value="#a0522d" onchange="updateThemeColor('primary', this.value)"></div>
+          <div class="color-row"><label>背景色</label><input type="color" class="color-picker" id="colorBg" value="#faf8f5" onchange="updateThemeColor('bg', this.value)"></div>
+          <div class="color-row"><label>文字色</label><input type="color" class="color-picker" id="colorText" value="#2c2418" onchange="updateThemeColor('text', this.value)"></div>
         </div>
         <div class="design-group">
           <div class="design-group-title">フォント</div>
           <select class="font-select" id="fontSelect" onchange="updateFont(this.value)">
-            <option value="'Inter', sans-serif">Inter（モダン）</option>
             <option value="'Noto Sans JP', sans-serif">Noto Sans JP（読みやすい）</option>
+            <option value="'Inter', sans-serif">Inter（モダン）</option>
             <option value="'Space Grotesk', sans-serif">Space Grotesk（テック）</option>
             <option value="'Playfair Display', serif">Playfair Display（エレガント）</option>
             <option value="system-ui, sans-serif">システムフォント</option>
@@ -385,52 +395,36 @@ html, body {
         </div>
         <div class="design-group">
           <div class="design-group-title">スタイル</div>
-          <div class="color-row"><label>角丸</label><input type="range" min="0" max="24" value="12" id="borderRadius" oninput="updateStyle()"></div>
+          <div class="color-row"><label>角丸</label><input type="range" min="0" max="24" value="10" id="borderRadius" oninput="updateStyle()"></div>
           <div class="color-row"><label>余白</label><input type="range" min="16" max="80" value="40" id="paddingSize" oninput="updateStyle()"></div>
         </div>
       </div>
 
       <!-- Tab: Settings -->
       <div class="panel-content" id="tab-settings" style="display:none">
-        <!-- Google Sheets status -->
         <div class="sheets-status disconnected" id="sheetsStatusBar">
           <span class="dot"></span>
           <span id="sheetsStatusText">未接続 — Googleログインで自動連携されます</span>
         </div>
 
         <div class="setting-row">
-          <div>
-            <div class="setting-label">送信後メッセージ</div>
-            <div class="setting-desc">送信完了時の表示</div>
-          </div>
+          <div><div class="setting-label">送信後メッセージ</div><div class="setting-desc">送信完了時の表示</div></div>
           <input class="setting-input" id="thankYouMsg" value="ありがとうございました！" oninput="updatePreview()">
         </div>
         <div class="setting-row">
-          <div>
-            <div class="setting-label">回答期限</div>
-            <div class="setting-desc">この日以降は受付終了</div>
-          </div>
+          <div><div class="setting-label">回答期限</div><div class="setting-desc">この日以降は受付終了</div></div>
           <input class="setting-input" type="date" id="deadline">
         </div>
         <div class="setting-row">
-          <div>
-            <div class="setting-label">回答上限</div>
-            <div class="setting-desc">上限数に達したら自動クローズ</div>
-          </div>
+          <div><div class="setting-label">回答上限</div><div class="setting-desc">上限数に達したら自動クローズ</div></div>
           <input class="setting-input" type="number" id="maxResponses" placeholder="無制限" min="1">
         </div>
         <div class="setting-row">
-          <div>
-            <div class="setting-label">reCAPTCHA</div>
-            <div class="setting-desc">ボット対策</div>
-          </div>
+          <div><div class="setting-label">reCAPTCHA</div><div class="setting-desc">ボット対策</div></div>
           <label class="toggle"><input type="checkbox" id="recaptchaToggle"><span class="toggle-slider"></span></label>
         </div>
         <div class="setting-row">
-          <div>
-            <div class="setting-label">Claude APIキー</div>
-            <div class="setting-desc">AI機能に使用（ローカル保存のみ）</div>
-          </div>
+          <div><div class="setting-label">Claude APIキー</div><div class="setting-desc">AI機能に使用（ローカル保存のみ）</div></div>
           <input class="setting-input" type="password" id="apiKey" placeholder="sk-ant-..." onchange="saveApiKey()">
         </div>
       </div>
@@ -483,7 +477,7 @@ var formState = {
     { id: 'q3', type: 'tel', label: '電話番号', required: false, placeholder: '090-1234-5678' },
     { id: 'q4', type: 'textarea', label: 'お問い合わせ内容', required: true, placeholder: 'ご用件をお聞かせください' },
   ],
-  theme: { name: 'minimal', primary: '#6366f1', bg: '#ffffff', text: '#1a1a1a', font: "'Inter', sans-serif", radius: 12, padding: 40 },
+  theme: { name: 'choreia', primary: '#a0522d', bg: '#faf8f5', text: '#2c2418', font: "'Noto Sans JP', sans-serif", radius: 10, padding: 40 },
   settings: { thankYouMsg: 'ありがとうございました！', deadline: '', maxResponses: '' }
 };
 
@@ -509,33 +503,20 @@ var sheetsSpreadsheetId = null;
 function initGoogleAuth() {
   if (typeof google !== 'undefined' && google.accounts) {
     tokenClient = google.accounts.oauth2.initTokenClient({
-      client_id: CLIENT_ID,
-      scope: SCOPES,
-      callback: async function(resp) {
-        if (resp.error) return;
-        accessToken = resp.access_token;
-        onSignedIn();
-      }
+      client_id: CLIENT_ID, scope: SCOPES,
+      callback: async function(resp) { if (resp.error) return; accessToken = resp.access_token; onSignedIn(); }
     });
-  } else {
-    setTimeout(initGoogleAuth, 200);
-  }
+  } else { setTimeout(initGoogleAuth, 200); }
 }
 
 function handleSignIn() {
-  if (!tokenClient) {
-    alert('Google認証の準備中です。少し待ってから再度お試しください。');
-    return;
-  }
+  if (!tokenClient) { alert('Google認証の準備中です。少し待ってから再度お試しください。'); return; }
   tokenClient.requestAccessToken();
 }
 
 function handleSignOut() {
-  if (accessToken) {
-    google.accounts.oauth2.revoke(accessToken);
-  }
-  accessToken = null;
-  sheetsSpreadsheetId = null;
+  if (accessToken) google.accounts.oauth2.revoke(accessToken);
+  accessToken = null; sheetsSpreadsheetId = null;
   document.getElementById('authSignedOut').style.display = 'block';
   document.getElementById('authSignedIn').style.display = 'none';
   document.getElementById('btnSignOut').style.display = 'none';
@@ -547,121 +528,55 @@ async function onSignedIn() {
   document.getElementById('authSignedOut').style.display = 'none';
   document.getElementById('authSignedIn').style.display = 'block';
   document.getElementById('btnSignOut').style.display = '';
-
-  // Get user info
   try {
     var res = await apiFetch('https://www.googleapis.com/oauth2/v3/userinfo');
     var info = await res.json();
     document.getElementById('userName').textContent = info.name || info.email;
     if (info.picture) document.getElementById('userAvatar').src = info.picture;
   } catch(e) {}
-
-  // Auto-create/find spreadsheet
   try {
     sheetsSpreadsheetId = await findOrCreateSpreadsheet();
     var link = document.getElementById('sheetsLink');
     link.href = 'https://docs.google.com/spreadsheets/d/' + sheetsSpreadsheetId;
     link.style.display = 'flex';
     updateSheetsStatus(true);
-    updatePreview(); // Re-render preview with Sheets integration
-  } catch(e) {
-    console.error('Sheets setup error:', e);
-    updateSheetsStatus(false, 'Sheets連携エラー: ' + e.message);
-  }
+    updatePreview();
+  } catch(e) { console.error('Sheets setup error:', e); updateSheetsStatus(false, 'Sheets連携エラー: ' + e.message); }
 }
 
 function updateSheetsStatus(connected, msg) {
   var bar = document.getElementById('sheetsStatusBar');
   var text = document.getElementById('sheetsStatusText');
-  if (connected) {
-    bar.classList.remove('disconnected');
-    text.textContent = msg || '接続済み — 回答は自動的にGoogle Sheetsに保存されます';
-  } else {
-    bar.classList.add('disconnected');
-    text.textContent = msg || '未接続 — Googleログインで自動連携されます';
-  }
+  if (connected) { bar.classList.remove('disconnected'); text.textContent = msg || '接続済み — 回答は自動的にGoogle Sheetsに保存されます'; }
+  else { bar.classList.add('disconnected'); text.textContent = msg || '未接続 — Googleログインで自動連携されます'; }
 }
 
 // ========== API Fetch Helper ==========
 async function apiFetch(url, options) {
   var token = getAccessToken();
   if (!token) throw new Error('未ログインです');
-  options = options || {};
-  options.headers = options.headers || {};
+  options = options || {}; options.headers = options.headers || {};
   options.headers['Authorization'] = 'Bearer ' + token;
   var res = await fetch(url, options);
-  if (res.status === 401 || res.status === 403) {
-    accessToken = null;
-    handleSignOut();
-    throw new Error('認証が切れました。再度ログインしてください。');
-  }
-  if (!res.ok) {
-    var errBody = '';
-    try { errBody = await res.text(); } catch(e) {}
-    throw new Error('API エラー (' + res.status + '): ' + errBody.slice(0, 200));
-  }
+  if (res.status === 401 || res.status === 403) { accessToken = null; handleSignOut(); throw new Error('認証が切れました。再度ログインしてください。'); }
+  if (!res.ok) { var errBody = ''; try { errBody = await res.text(); } catch(e) {} throw new Error('API エラー (' + res.status + '): ' + errBody.slice(0, 200)); }
   return res;
 }
 
 // ========== Google Sheets ==========
-var SPREADSHEET_TITLE = 'SID Forms — 回答データ';
+var SPREADSHEET_TITLE = 'Choreia Forms — 回答データ';
 
 async function findOrCreateSpreadsheet() {
-  // Search for existing
-  var searchRes = await apiFetch(
-    'https://www.googleapis.com/drive/v3/files?q=name%3D%27' + encodeURIComponent(SPREADSHEET_TITLE) +
-    '%27+and+mimeType%3D%27application/vnd.google-apps.spreadsheet%27+and+trashed%3Dfalse&fields=files(id,name)'
-  );
+  var searchRes = await apiFetch('https://www.googleapis.com/drive/v3/files?q=name%3D%27' + encodeURIComponent(SPREADSHEET_TITLE) + '%27+and+mimeType%3D%27application/vnd.google-apps.spreadsheet%27+and+trashed%3Dfalse&fields=files(id,name)');
   var searchData = await searchRes.json();
-  if (searchData.files && searchData.files.length > 0) {
-    return searchData.files[0].id;
-  }
-
-  // Create new with headers based on current form questions
+  if (searchData.files && searchData.files.length > 0) return searchData.files[0].id;
   var headers = buildSheetHeaders();
   var createRes = await apiFetch('https://sheets.googleapis.com/v4/spreadsheets', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      properties: { title: SPREADSHEET_TITLE },
-      sheets: [{
-        properties: { title: formState.title || 'フォーム回答' },
-        data: [{
-          startRow: 0, startColumn: 0,
-          rowData: [{
-            values: headers.map(function(v) { return { userEnteredValue: { stringValue: v } }; })
-          }]
-        }]
-      }]
-    })
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ properties: { title: SPREADSHEET_TITLE }, sheets: [{ properties: { title: formState.title || 'フォーム回答' }, data: [{ startRow: 0, startColumn: 0, rowData: [{ values: headers.map(function(v) { return { userEnteredValue: { stringValue: v } }; }) }] }] }] })
   });
   var created = await createRes.json();
   return created.spreadsheetId;
-}
-
-async function ensureSheetForForm(spreadsheetId, sheetName, headers) {
-  var metaRes = await apiFetch(
-    'https://sheets.googleapis.com/v4/spreadsheets/' + spreadsheetId + '?fields=sheets.properties.title'
-  );
-  var meta = await metaRes.json();
-  var exists = meta.sheets && meta.sheets.some(function(s) { return s.properties.title === sheetName; });
-  if (exists) return;
-
-  await apiFetch(
-    'https://sheets.googleapis.com/v4/spreadsheets/' + spreadsheetId + ':batchUpdate',
-    {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ requests: [{ addSheet: { properties: { title: sheetName } } }] })
-    }
-  );
-  if (headers) {
-    await apiFetch(
-      'https://sheets.googleapis.com/v4/spreadsheets/' + spreadsheetId + '/values/' +
-      encodeURIComponent(sheetName) + '!A1:append?valueInputOption=USER_ENTERED&insertDataOption=INSERT_ROWS',
-      { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ values: [headers] }) }
-    );
-  }
 }
 
 function buildSheetHeaders() {
@@ -672,25 +587,19 @@ function buildSheetHeaders() {
 
 // ========== Themes ==========
 var themes = [
+  { name: 'choreia', label: 'Choreia', primary: '#a0522d', bg: '#faf8f5', text: '#2c2418', font: "'Noto Sans JP', sans-serif" },
   { name: 'minimal', label: 'ミニマル', primary: '#6366f1', bg: '#ffffff', text: '#1a1a1a', font: "'Inter', sans-serif" },
   { name: 'dark', label: 'ダーク', primary: '#818cf8', bg: '#0f172a', text: '#f1f5f9', font: "'Inter', sans-serif" },
   { name: 'warm', label: 'ウォーム', primary: '#d97706', bg: '#fffbeb', text: '#451a03', font: "'Noto Sans JP', sans-serif" },
-  { name: 'nature', label: 'ナチュラル', primary: '#16a34a', bg: '#f0fdf4', text: '#14532d', font: "'Noto Sans JP', sans-serif" },
+  { name: 'nature', label: 'ナチュラル', primary: '#4a6741', bg: '#f0fdf4', text: '#14532d', font: "'Noto Sans JP', sans-serif" },
   { name: 'luxury', label: 'ラグジュアリー', primary: '#c9a84c', bg: '#0a0a0a', text: '#f5f0e8', font: "'Playfair Display', serif" },
   { name: 'tech', label: 'テック', primary: '#06b6d4', bg: '#0c0a09', text: '#e7e5e4', font: "'Space Grotesk', sans-serif" },
   { name: 'sakura', label: 'さくら', primary: '#ec4899', bg: '#fdf2f8', text: '#831843', font: "'Noto Sans JP', sans-serif" },
   { name: 'ocean', label: 'オーシャン', primary: '#0284c7', bg: '#f0f9ff', text: '#0c4a6e', font: "'Inter', sans-serif" },
-  { name: 'brutal', label: 'ブルータル', primary: '#000000', bg: '#ffffff', text: '#000000', font: "'Space Grotesk', sans-serif" },
 ];
 
 // ========== Init ==========
-function init() {
-  renderThemeGrid();
-  renderQuestions();
-  updatePreview();
-  loadApiKey();
-  initGoogleAuth();
-}
+function init() { renderThemeGrid(); renderQuestions(); updatePreview(); loadApiKey(); initGoogleAuth(); }
 
 // ========== Tabs ==========
 function switchTab(tab) {
@@ -708,8 +617,7 @@ function renderThemeGrid() {
         '<div style="width:60%;height:6px;background:' + t.primary + ';border-radius:3px;"></div>' +
         '<div style="width:80%;height:4px;background:' + t.text + ';opacity:0.3;border-radius:2px;"></div>' +
         '<div style="width:50%;height:4px;background:' + t.text + ';opacity:0.2;border-radius:2px;"></div>' +
-      '</div>' +
-      '<div class="theme-card-name">' + t.label + '</div></div>';
+      '</div><div class="theme-card-name">' + t.label + '</div></div>';
   }).join('');
 }
 
@@ -721,24 +629,12 @@ function applyTheme(name) {
   document.getElementById('colorBg').value = t.bg;
   document.getElementById('colorText').value = t.text;
   document.getElementById('fontSelect').value = t.font;
-  renderThemeGrid();
-  updatePreview();
+  renderThemeGrid(); updatePreview();
 }
 
-function updateThemeColor(key, val) {
-  formState.theme[key === 'primary' ? 'primary' : key] = val;
-  formState.theme.name = 'custom';
-  renderThemeGrid();
-  updatePreview();
-}
-
+function updateThemeColor(key, val) { formState.theme[key === 'primary' ? 'primary' : key] = val; formState.theme.name = 'custom'; renderThemeGrid(); updatePreview(); }
 function updateFont(val) { formState.theme.font = val; updatePreview(); }
-
-function updateStyle() {
-  formState.theme.radius = parseInt(document.getElementById('borderRadius').value);
-  formState.theme.padding = parseInt(document.getElementById('paddingSize').value);
-  updatePreview();
-}
+function updateStyle() { formState.theme.radius = parseInt(document.getElementById('borderRadius').value); formState.theme.padding = parseInt(document.getElementById('paddingSize').value); updatePreview(); }
 
 // ========== Questions ==========
 var typeLabels = { text: 'テキスト', email: 'メール', tel: '電話', textarea: '長文', select: 'ドロップダウン', radio: 'ラジオ', checkbox: 'チェック', date: '日付', number: '数値' };
@@ -748,297 +644,152 @@ function addQuestion(type) {
   var id = 'q' + (nextId++);
   var q = { id: id, type: type, label: '新しい質問', required: false, placeholder: defaultPlaceholders[type] || '' };
   if (['select', 'radio', 'checkbox'].indexOf(type) >= 0) q.options = ['選択肢1', '選択肢2', '選択肢3'];
-  formState.questions.push(q);
-  renderQuestions(); updatePreview();
-  activeQuestionId = id; highlightQuestion(id);
+  formState.questions.push(q); renderQuestions(); updatePreview(); activeQuestionId = id; highlightQuestion(id);
 }
-
-function removeQuestion(id) {
-  formState.questions = formState.questions.filter(function(q) { return q.id !== id; });
-  if (activeQuestionId === id) activeQuestionId = null;
-  renderQuestions(); updatePreview();
-}
-
-function duplicateQuestion(id) {
-  var orig = formState.questions.find(function(q) { return q.id === id; });
-  if (!orig) return;
-  var newQ = JSON.parse(JSON.stringify(orig));
-  newQ.id = 'q' + (nextId++);
-  var idx = formState.questions.findIndex(function(q) { return q.id === id; });
-  formState.questions.splice(idx + 1, 0, newQ);
-  renderQuestions(); updatePreview();
-}
-
-function highlightQuestion(id) {
-  activeQuestionId = id;
-  document.querySelectorAll('.question-card').forEach(function(c) { c.classList.toggle('active', c.dataset.id === id); });
-}
+function removeQuestion(id) { formState.questions = formState.questions.filter(function(q) { return q.id !== id; }); if (activeQuestionId === id) activeQuestionId = null; renderQuestions(); updatePreview(); }
+function duplicateQuestion(id) { var orig = formState.questions.find(function(q) { return q.id === id; }); if (!orig) return; var newQ = JSON.parse(JSON.stringify(orig)); newQ.id = 'q' + (nextId++); var idx = formState.questions.findIndex(function(q) { return q.id === id; }); formState.questions.splice(idx + 1, 0, newQ); renderQuestions(); updatePreview(); }
+function highlightQuestion(id) { activeQuestionId = id; document.querySelectorAll('.question-card').forEach(function(c) { c.classList.toggle('active', c.dataset.id === id); }); }
 
 function renderQuestions() {
   var list = document.getElementById('questionList');
   list.innerHTML = formState.questions.map(function(q) {
     var hasOptions = ['select', 'radio', 'checkbox'].indexOf(q.type) >= 0;
     return '<div class="question-card ' + (q.id === activeQuestionId ? 'active' : '') + '" data-id="' + q.id + '" draggable="true" onclick="highlightQuestion(\'' + q.id + '\')" ondragstart="onDragStart(event,\'' + q.id + '\')" ondragover="onDragOver(event)" ondrop="onDrop(event,\'' + q.id + '\')" ondragend="onDragEnd(event)" ondragenter="event.currentTarget.classList.add(\'drag-over\')" ondragleave="event.currentTarget.classList.remove(\'drag-over\')">' +
-      '<div class="question-header">' +
-        '<span class="question-drag">⠿</span>' +
-        '<span class="question-type-badge">' + typeLabels[q.type] + '</span>' +
-        '<div class="question-actions">' +
-          '<button class="btn-ghost btn-icon" onclick="event.stopPropagation();duplicateQuestion(\'' + q.id + '\')" title="複製">⧉</button>' +
-          '<button class="btn-danger btn-icon" onclick="event.stopPropagation();removeQuestion(\'' + q.id + '\')" title="削除">✕</button>' +
-        '</div>' +
-      '</div>' +
+      '<div class="question-header"><span class="question-drag">⠿</span><span class="question-type-badge">' + typeLabels[q.type] + '</span>' +
+      '<div class="question-actions"><button class="btn-ghost btn-icon" onclick="event.stopPropagation();duplicateQuestion(\'' + q.id + '\')" title="複製">⧉</button><button class="btn-danger btn-icon" onclick="event.stopPropagation();removeQuestion(\'' + q.id + '\')" title="削除">✕</button></div></div>' +
       '<input class="question-label-input" value="' + escHtml(q.label) + '" oninput="updateQuestion(\'' + q.id + '\',\'label\',this.value)" onclick="event.stopPropagation()">' +
       (hasOptions ? renderOptionsEditor(q) : '') +
-      '<div class="question-meta"><label>必須 <label class="toggle"><input type="checkbox" ' + (q.required ? 'checked' : '') + ' onchange="updateQuestion(\'' + q.id + '\',\'required\',this.checked)"><span class="toggle-slider"></span></label></label></div>' +
-    '</div>';
+      '<div class="question-meta"><label>必須 <label class="toggle"><input type="checkbox" ' + (q.required ? 'checked' : '') + ' onchange="updateQuestion(\'' + q.id + '\',\'required\',this.checked)"><span class="toggle-slider"></span></label></label></div></div>';
   }).join('');
 }
 
 function renderOptionsEditor(q) {
   var rows = (q.options || []).map(function(opt, i) {
     var icon = q.type === 'checkbox' ? '☐' : q.type === 'radio' ? '○' : (i+1) + '.';
-    return '<div class="option-row"><span style="color:var(--text2);font-size:12px;">' + icon + '</span>' +
-      '<input class="option-input" value="' + escHtml(opt) + '" oninput="updateOption(\'' + q.id + '\',' + i + ',this.value)" onclick="event.stopPropagation()">' +
-      '<button class="btn-ghost" onclick="event.stopPropagation();removeOption(\'' + q.id + '\',' + i + ')" style="padding:2px 6px;font-size:11px;">✕</button></div>';
+    return '<div class="option-row"><span style="color:var(--text2);font-size:12px;">' + icon + '</span><input class="option-input" value="' + escHtml(opt) + '" oninput="updateOption(\'' + q.id + '\',' + i + ',this.value)" onclick="event.stopPropagation()"><button class="btn-ghost" onclick="event.stopPropagation();removeOption(\'' + q.id + '\',' + i + ')" style="padding:2px 6px;font-size:11px;">✕</button></div>';
   }).join('');
-  return '<div class="options-editor">' + rows +
-    '<button class="add-option-btn" onclick="event.stopPropagation();addOption(\'' + q.id + '\')">+ 選択肢を追加</button></div>';
+  return '<div class="options-editor">' + rows + '<button class="add-option-btn" onclick="event.stopPropagation();addOption(\'' + q.id + '\')">+ 選択肢を追加</button></div>';
 }
 
-function updateQuestion(id, key, val) {
-  var q = formState.questions.find(function(q) { return q.id === id; });
-  if (q) { q[key] = val; updatePreview(); }
-}
-function updateOption(qId, idx, val) {
-  var q = formState.questions.find(function(q) { return q.id === qId; });
-  if (q && q.options) { q.options[idx] = val; updatePreview(); }
-}
-function addOption(qId) {
-  var q = formState.questions.find(function(q) { return q.id === qId; });
-  if (q && q.options) { q.options.push('選択肢' + (q.options.length + 1)); renderQuestions(); updatePreview(); }
-}
-function removeOption(qId, idx) {
-  var q = formState.questions.find(function(q) { return q.id === qId; });
-  if (q && q.options && q.options.length > 1) { q.options.splice(idx, 1); renderQuestions(); updatePreview(); }
-}
+function updateQuestion(id, key, val) { var q = formState.questions.find(function(q) { return q.id === id; }); if (q) { q[key] = val; updatePreview(); } }
+function updateOption(qId, idx, val) { var q = formState.questions.find(function(q) { return q.id === qId; }); if (q && q.options) { q.options[idx] = val; updatePreview(); } }
+function addOption(qId) { var q = formState.questions.find(function(q) { return q.id === qId; }); if (q && q.options) { q.options.push('選択肢' + (q.options.length + 1)); renderQuestions(); updatePreview(); } }
+function removeOption(qId, idx) { var q = formState.questions.find(function(q) { return q.id === qId; }); if (q && q.options && q.options.length > 1) { q.options.splice(idx, 1); renderQuestions(); updatePreview(); } }
 
 // ========== Drag & Drop ==========
 function onDragStart(e, id) { draggedId = id; e.currentTarget.classList.add('dragging'); e.dataTransfer.effectAllowed = 'move'; }
 function onDragOver(e) { e.preventDefault(); e.dataTransfer.dropEffect = 'move'; }
-function onDrop(e, targetId) {
-  e.preventDefault(); e.currentTarget.classList.remove('drag-over');
-  if (!draggedId || draggedId === targetId) return;
-  var qs = formState.questions;
-  var fromIdx = qs.findIndex(function(q) { return q.id === draggedId; });
-  var toIdx = qs.findIndex(function(q) { return q.id === targetId; });
-  var moved = qs.splice(fromIdx, 1)[0];
-  qs.splice(toIdx, 0, moved);
-  renderQuestions(); updatePreview();
-}
-function onDragEnd(e) {
-  e.currentTarget.classList.remove('dragging');
-  document.querySelectorAll('.drag-over').forEach(function(el) { el.classList.remove('drag-over'); });
-  draggedId = null;
-}
+function onDrop(e, targetId) { e.preventDefault(); e.currentTarget.classList.remove('drag-over'); if (!draggedId || draggedId === targetId) return; var qs = formState.questions; var fromIdx = qs.findIndex(function(q) { return q.id === draggedId; }); var toIdx = qs.findIndex(function(q) { return q.id === targetId; }); var moved = qs.splice(fromIdx, 1)[0]; qs.splice(toIdx, 0, moved); renderQuestions(); updatePreview(); }
+function onDragEnd(e) { e.currentTarget.classList.remove('dragging'); document.querySelectorAll('.drag-over').forEach(function(el) { el.classList.remove('drag-over'); }); draggedId = null; }
 
 // ========== Preview ==========
 function generateFormHTML(standalone) {
   var t = formState.theme;
   var isLight = isLightColor(t.bg);
-  var inputBg = isLight ? adjustBrightness(t.bg, -5) : adjustBrightness(t.bg, 15);
-  var inputBorder = isLight ? adjustBrightness(t.bg, -15) : adjustBrightness(t.bg, 25);
+  var inputBg = isLight ? adjustBrightness(t.bg, -3) : adjustBrightness(t.bg, 15);
+  var inputBorder = isLight ? adjustBrightness(t.bg, -12) : adjustBrightness(t.bg, 25);
   var subtextColor = isLight ? adjustBrightness(t.text, 40) : adjustBrightness(t.text, -30);
-  var isBrutal = t.name === 'brutal';
 
   var questionsHTML = formState.questions.map(function(q) {
-    var req = q.required ? '<span style="color:#ef4444;margin-left:4px;">*</span>' : '';
+    var req = q.required ? '<span style="color:#c0392b;margin-left:4px;">*</span>' : '';
     var input = '';
-    var baseInputStyle = 'width:100%;padding:12px 16px;border:' + (isBrutal ? '3px solid black' : '1px solid ' + inputBorder) +
-      ';border-radius:' + (isBrutal ? '0' : t.radius/2 + 'px') + ';background:' + inputBg + ';color:' + t.text +
-      ';font-size:15px;outline:none;font-family:' + t.font + ';transition:border-color 0.2s;';
+    var baseInputStyle = 'width:100%;padding:12px 16px;border:1px solid ' + inputBorder + ';border-radius:' + t.radius/2 + 'px;background:' + inputBg + ';color:' + t.text + ';font-size:15px;outline:none;font-family:' + t.font + ';transition:border-color 0.2s;';
 
     switch (q.type) {
       case 'text': case 'email': case 'tel': case 'date': case 'number':
-        input = '<input type="' + q.type + '" name="' + q.id + '" ' + (q.required ? 'required' : '') +
-          ' placeholder="' + escHtml(q.placeholder || '') + '" style="' + baseInputStyle + '"' +
-          ' onfocus="this.style.borderColor=\'' + t.primary + '\'" onblur="this.style.borderColor=\'' + (isBrutal ? 'black' : inputBorder) + '\'">'; break;
+        input = '<input type="' + q.type + '" name="' + q.id + '" ' + (q.required ? 'required' : '') + ' placeholder="' + escHtml(q.placeholder || '') + '" style="' + baseInputStyle + '" onfocus="this.style.borderColor=\'' + t.primary + '\'" onblur="this.style.borderColor=\'' + inputBorder + '\'">'; break;
       case 'textarea':
-        input = '<textarea name="' + q.id + '" ' + (q.required ? 'required' : '') + ' rows="4"' +
-          ' placeholder="' + escHtml(q.placeholder || '') + '" style="' + baseInputStyle + 'resize:vertical;"' +
-          ' onfocus="this.style.borderColor=\'' + t.primary + '\'" onblur="this.style.borderColor=\'' + (isBrutal ? 'black' : inputBorder) + '\'"></textarea>'; break;
+        input = '<textarea name="' + q.id + '" ' + (q.required ? 'required' : '') + ' rows="4" placeholder="' + escHtml(q.placeholder || '') + '" style="' + baseInputStyle + 'resize:vertical;" onfocus="this.style.borderColor=\'' + t.primary + '\'" onblur="this.style.borderColor=\'' + inputBorder + '\'"></textarea>'; break;
       case 'select':
-        input = '<select name="' + q.id + '" ' + (q.required ? 'required' : '') + ' style="' + baseInputStyle + '">' +
-          '<option value="">選択してください</option>' +
-          (q.options||[]).map(function(o) { return '<option value="' + escHtml(o) + '">' + escHtml(o) + '</option>'; }).join('') +
-          '</select>'; break;
+        input = '<select name="' + q.id + '" ' + (q.required ? 'required' : '') + ' style="' + baseInputStyle + '"><option value="">選択してください</option>' + (q.options||[]).map(function(o) { return '<option value="' + escHtml(o) + '">' + escHtml(o) + '</option>'; }).join('') + '</select>'; break;
       case 'radio': case 'checkbox':
-        input = '<div style="display:flex;flex-direction:column;gap:10px;">' +
-          (q.options||[]).map(function(o) {
-            return '<label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-size:15px;padding:10px 14px;border:1px solid ' + inputBorder + ';border-radius:' + (isBrutal ? '0' : t.radius/2 + 'px') + ';background:' + inputBg + ';transition:all 0.2s;">' +
-              '<input type="' + q.type + '" name="' + q.id + '" value="' + escHtml(o) + '" style="width:18px;height:18px;accent-color:' + t.primary + ';">' +
-              '<span>' + escHtml(o) + '</span></label>';
-          }).join('') + '</div>'; break;
+        input = '<div style="display:flex;flex-direction:column;gap:8px;">' + (q.options||[]).map(function(o) {
+          return '<label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-size:15px;padding:10px 14px;border:1px solid ' + inputBorder + ';border-radius:' + t.radius/2 + 'px;background:' + inputBg + ';transition:all 0.2s;"><input type="' + q.type + '" name="' + q.id + '" value="' + escHtml(o) + '" style="width:18px;height:18px;accent-color:' + t.primary + ';"><span>' + escHtml(o) + '</span></label>';
+        }).join('') + '</div>'; break;
     }
     return '<div style="margin-bottom:24px;"><label style="display:block;font-weight:600;margin-bottom:8px;font-size:14px;color:' + t.text + ';">' + escHtml(q.label) + req + '</label>' + input + '</div>';
   }).join('');
 
-  // Build the submission script
-  // If Sheets is connected, embed the spreadsheet ID and access token logic
-  var submitScript = '';
-  if (sheetsSpreadsheetId && standalone) {
-    // For exported HTML: use Google Sheets API via Apps Script Web App (no token needed)
-    // For now, show a placeholder approach
-    submitScript = 'console.log("Form data:", data); alert("回答を送信しました（Sheets連携はデプロイ後に有効）");';
-  } else if (sheetsSpreadsheetId) {
-    // For preview: demonstrate the Sheets integration
-    submitScript = 'console.log("→ Google Sheets送信:", data);';
-  } else {
-    submitScript = 'console.log("Form submitted:", data);';
-  }
+  var submitScript = sheetsSpreadsheetId ? 'console.log("→ Sheets送信:", data);' : 'console.log("Form submitted:", data);';
 
-  return '<!DOCTYPE html><html lang="ja"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">' +
-    '<title>' + escHtml(formState.title) + '</title>' +
+  return '<!DOCTYPE html><html lang="ja"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>' + escHtml(formState.title) + '</title>' +
     (standalone ? '<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&family=Playfair+Display:wght@700&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">' : '') +
-    '<style>*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}' +
-    'body{min-height:100vh;font-family:' + t.font + ';background:' + t.bg + ';color:' + t.text + ';display:flex;align-items:flex-start;justify-content:center;padding:' + t.padding + 'px 20px;}' +
-    '.form-container{width:100%;max-width:580px;' + (isBrutal ? 'border:4px solid black;padding:40px;background:white;' : 'background:' + (isLight ? t.bg : adjustBrightness(t.bg, 8)) + ';padding:' + t.padding + 'px;border-radius:' + t.radius + 'px;box-shadow:0 4px 40px rgba(0,0,0,' + (isLight ? '0.08' : '0.3') + ');') + '}' +
-    '.form-title{font-size:' + (isBrutal ? '36px' : '28px') + ';font-weight:' + (isBrutal ? '900' : '700') + ';margin-bottom:8px;' + (isBrutal ? 'text-transform:uppercase;letter-spacing:-1px;' : '') + 'color:' + t.text + ';line-height:1.2;}' +
+    '<style>*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}body{min-height:100vh;font-family:' + t.font + ';background:' + t.bg + ';color:' + t.text + ';display:flex;align-items:flex-start;justify-content:center;padding:' + t.padding + 'px 20px;}' +
+    '.form-container{width:100%;max-width:580px;background:' + (isLight ? t.bg : adjustBrightness(t.bg, 8)) + ';padding:' + t.padding + 'px;border-radius:' + t.radius + 'px;box-shadow:0 2px 32px rgba(0,0,0,' + (isLight ? '0.06' : '0.3') + ');}' +
+    '.form-title{font-size:26px;font-weight:700;margin-bottom:8px;color:' + t.text + ';line-height:1.3;}' +
     '.form-desc{font-size:15px;color:' + subtextColor + ';margin-bottom:32px;line-height:1.6;}' +
-    '.submit-btn{width:100%;padding:14px 28px;background:' + t.primary + ';color:white;border:' + (isBrutal ? '3px solid black' : 'none') + ';border-radius:' + (isBrutal ? '0' : t.radius/2 + 'px') + ';font-size:16px;font-weight:700;cursor:pointer;transition:all 0.2s;font-family:' + t.font + ';' + (isBrutal ? 'text-transform:uppercase;letter-spacing:2px;' : '') + '}' +
+    '.submit-btn{width:100%;padding:14px 28px;background:' + t.primary + ';color:white;border:none;border-radius:' + t.radius/2 + 'px;font-size:16px;font-weight:700;cursor:pointer;transition:all 0.2s;font-family:' + t.font + ';}' +
     '.submit-btn:hover{opacity:0.9;transform:translateY(-1px);}' +
-    '.thank-you{display:none;text-align:center;padding:60px 20px;}' +
-    '.thank-you h2{font-size:24px;margin-bottom:12px;}' +
-    '.thank-you p{color:' + subtextColor + ';}' +
-    '.powered-by{text-align:center;margin-top:24px;font-size:12px;color:' + subtextColor + ';opacity:0.5;}' +
-    '.powered-by a{color:' + subtextColor + ';text-decoration:none;}.powered-by a:hover{opacity:0.8;}' +
-    '</style></head><body>' +
-    '<div class="form-container"><form id="sidForm" onsubmit="handleSubmit(event)">' +
+    '.thank-you{display:none;text-align:center;padding:60px 20px;}.thank-you h2{font-size:24px;margin-bottom:12px;}.thank-you p{color:' + subtextColor + ';}' +
+    '.powered-by{text-align:center;margin-top:24px;font-size:12px;color:' + subtextColor + ';opacity:0.5;}.powered-by a{color:' + subtextColor + ';text-decoration:none;}.powered-by a:hover{opacity:0.8;}' +
+    '</style></head><body><div class="form-container"><form id="sidForm" onsubmit="handleSubmit(event)">' +
     '<h1 class="form-title">' + escHtml(formState.title) + '</h1>' +
     (formState.description ? '<p class="form-desc">' + escHtml(formState.description) + '</p>' : '') +
     questionsHTML +
     '<button type="submit" class="submit-btn">送信する</button></form>' +
     '<div class="thank-you" id="thankYou"><h2>' + escHtml(formState.settings.thankYouMsg || 'ありがとうございました！') + '</h2><p>回答を受け付けました。</p></div>' +
-    '<div class="powered-by"><a href="https://github.com/Choreia/Form">Powered by SID Forms</a></div></div>' +
-    '<script>function handleSubmit(e){e.preventDefault();var data=Object.fromEntries(new FormData(e.target));' + submitScript +
-    'e.target.style.display="none";document.getElementById("thankYou").style.display="block";}<\/script>' +
-    '</body></html>';
+    '<div class="powered-by"><a href="https://github.com/Choreia/Form">Powered by Choreia Forms</a></div></div>' +
+    '<script>function handleSubmit(e){e.preventDefault();var data=Object.fromEntries(new FormData(e.target));' + submitScript + 'e.target.style.display="none";document.getElementById("thankYou").style.display="block";}<\/script></body></html>';
 }
 
 function updatePreview() {
   formState.title = document.getElementById('formTitle').value;
   formState.description = document.getElementById('formDesc').value;
   formState.settings.thankYouMsg = document.getElementById('thankYouMsg') ? document.getElementById('thankYouMsg').value : formState.settings.thankYouMsg;
-
   var iframe = document.getElementById('previewIframe');
   iframe.srcdoc = generateFormHTML(false);
-  iframe.onload = function() {
-    try {
-      var h = iframe.contentDocument.documentElement.scrollHeight;
-      iframe.style.height = Math.max(600, h + 40) + 'px';
-    } catch(e) {}
-  };
+  iframe.onload = function() { try { var h = iframe.contentDocument.documentElement.scrollHeight; iframe.style.height = Math.max(600, h + 40) + 'px'; } catch(e) {} };
 }
 
 // ========== Device Preview ==========
-function setDevice(device) {
-  document.querySelectorAll('.device-btn').forEach(function(b) { b.classList.toggle('active', b.dataset.device === device); });
-  document.getElementById('previewFrame').className = 'preview-frame ' + (device === 'desktop' ? '' : device);
-}
+function setDevice(device) { document.querySelectorAll('.device-btn').forEach(function(b) { b.classList.toggle('active', b.dataset.device === device); }); document.getElementById('previewFrame').className = 'preview-frame ' + (device === 'desktop' ? '' : device); }
 
 // ========== AI Generation ==========
 async function generateWithAI() {
   var input = document.getElementById('aiInput');
   var prompt = input.value.trim();
   if (!prompt) return;
-
   var apiKey = localStorage.getItem('sid_forms_api_key');
   if (!apiKey) { showToast('設定タブでClaude APIキーを入力してください', 'error'); switchTab('settings'); return; }
-
   var statusEl = document.getElementById('aiStatus');
   statusEl.innerHTML = '<div class="ai-loading"><div class="spinner"></div>AIがフォームを生成中...</div>';
   document.getElementById('aiBtn').disabled = true;
-
   try {
-    var currentState = JSON.stringify({
-      title: formState.title, description: formState.description,
-      questions: formState.questions.map(function(q) { return { type: q.type, label: q.label, required: q.required, options: q.options }; }),
-      theme: formState.theme.name
-    });
-
+    var currentState = JSON.stringify({ title: formState.title, description: formState.description, questions: formState.questions.map(function(q) { return { type: q.type, label: q.label, required: q.required, options: q.options }; }), theme: formState.theme.name });
     var response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'x-api-key': apiKey, 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-6',
-        max_tokens: 2048,
-        messages: [{ role: 'user', content: 'あなたはフォームビルダーのアシスタントです。ユーザーの指示に基づいてフォームのJSONを生成・修正してください。\n\n現在のフォーム状態:\n' + currentState + '\n\nユーザーの指示: ' + prompt + '\n\n以下のJSON形式で回答してください。必ず有効なJSONのみを出力（説明文不要）:\n{"title":"フォームタイトル","description":"説明","questions":[{"type":"text|email|tel|textarea|select|radio|checkbox|date|number","label":"質問文","required":true/false,"placeholder":"","options":["選択肢"]}],"theme":"minimal|dark|warm|nature|luxury|tech|sakura|ocean|brutal"}' }]
-      })
+      body: JSON.stringify({ model: 'claude-sonnet-4-6', max_tokens: 2048, messages: [{ role: 'user', content: 'あなたはフォームビルダーのアシスタントです。ユーザーの指示に基づいてフォームのJSONを生成・修正してください。\n\n現在のフォーム状態:\n' + currentState + '\n\nユーザーの指示: ' + prompt + '\n\n以下のJSON形式で回答してください。必ず有効なJSONのみを出力（説明文不要）:\n{"title":"フォームタイトル","description":"説明","questions":[{"type":"text|email|tel|textarea|select|radio|checkbox|date|number","label":"質問文","required":true/false,"placeholder":"","options":["選択肢"]}],"theme":"choreia|minimal|dark|warm|nature|luxury|tech|sakura|ocean"}' }] })
     });
-
-    if (!response.ok) {
-      var err = {};
-      try { err = await response.json(); } catch(e) {}
-      throw new Error(err.error ? err.error.message : 'API Error: ' + response.status);
-    }
-
+    if (!response.ok) { var err = {}; try { err = await response.json(); } catch(e) {} throw new Error(err.error ? err.error.message : 'API Error: ' + response.status); }
     var data = await response.json();
     var text = data.content[0].text;
     var jsonMatch = text.match(/\{[\s\S]*\}/);
     if (!jsonMatch) throw new Error('AIからの応答をパースできませんでした');
     var result = JSON.parse(jsonMatch[0]);
-
     if (result.title) { formState.title = result.title; document.getElementById('formTitle').value = result.title; }
     if (result.description !== undefined) { formState.description = result.description; document.getElementById('formDesc').value = result.description; }
-    if (result.questions) {
-      formState.questions = result.questions.map(function(q) {
-        return { id: 'q' + (nextId++), type: q.type || 'text', label: q.label || '質問', required: q.required || false, placeholder: q.placeholder || '', options: q.options };
-      });
-    }
+    if (result.questions) { formState.questions = result.questions.map(function(q) { return { id: 'q' + (nextId++), type: q.type || 'text', label: q.label || '質問', required: q.required || false, placeholder: q.placeholder || '', options: q.options }; }); }
     if (result.theme) applyTheme(result.theme);
-    renderQuestions(); updatePreview();
-    statusEl.innerHTML = '';
-    input.value = '';
+    renderQuestions(); updatePreview(); statusEl.innerHTML = ''; input.value = '';
     showToast('フォームを生成しました', 'success');
-  } catch (err) {
-    statusEl.innerHTML = '<div style="color:var(--danger);font-size:12px;padding:8px;">' + escHtml(err.message) + '</div>';
-  } finally {
-    document.getElementById('aiBtn').disabled = false;
-  }
+  } catch (err) { statusEl.innerHTML = '<div style="color:var(--danger);font-size:12px;padding:8px;">' + escHtml(err.message) + '</div>'; }
+  finally { document.getElementById('aiBtn').disabled = false; }
 }
 
 // ========== API Key ==========
-function saveApiKey() {
-  var key = document.getElementById('apiKey').value;
-  if (key) localStorage.setItem('sid_forms_api_key', key);
-  else localStorage.removeItem('sid_forms_api_key');
-}
-function loadApiKey() {
-  var key = localStorage.getItem('sid_forms_api_key');
-  if (key) document.getElementById('apiKey').value = key;
-}
+function saveApiKey() { var key = document.getElementById('apiKey').value; if (key) localStorage.setItem('sid_forms_api_key', key); else localStorage.removeItem('sid_forms_api_key'); }
+function loadApiKey() { var key = localStorage.getItem('sid_forms_api_key'); if (key) document.getElementById('apiKey').value = key; }
 
 // ========== Export ==========
-function exportHTML() {
-  var html = generateFormHTML(true);
-  var blob = new Blob([html], { type: 'text/html' });
-  var url = URL.createObjectURL(blob);
-  var a = document.createElement('a');
-  a.href = url; a.download = (formState.title || 'form') + '.html'; a.click();
-  URL.revokeObjectURL(url);
-  showToast('HTMLファイルをダウンロードしました', 'success');
-  closePublishModal();
-}
+function exportHTML() { var html = generateFormHTML(true); var blob = new Blob([html], { type: 'text/html' }); var url = URL.createObjectURL(blob); var a = document.createElement('a'); a.href = url; a.download = (formState.title || 'form') + '.html'; a.click(); URL.revokeObjectURL(url); showToast('HTMLファイルをダウンロードしました', 'success'); closePublishModal(); }
 
 // ========== Modals ==========
 function showPublishModal() { document.getElementById('publishModal').classList.add('active'); }
 function closePublishModal() { document.getElementById('publishModal').classList.remove('active'); }
 
 // ========== Toast ==========
-function showToast(msg, type) {
-  var t = document.getElementById('toast');
-  t.textContent = msg; t.className = 'toast ' + (type || 'success') + ' show';
-  setTimeout(function() { t.classList.remove('show'); }, 3000);
-}
+function showToast(msg, type) { var t = document.getElementById('toast'); t.textContent = msg; t.className = 'toast ' + (type || 'success') + ' show'; setTimeout(function() { t.classList.remove('show'); }, 3000); }
 
 // ========== Utilities ==========
 function escHtml(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
