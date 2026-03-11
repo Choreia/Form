@@ -98,7 +98,7 @@ Forms/
 
 ## 関連プロジェクト
 
-- [みんなの経理](https://github.com/Choreia/minnano-keiri) — 完全無料の会計ソフト（同じアーキテクチャ）
+- [Choreia Books](https://github.com/Choreia/Books) — 完全無料の会計ソフト（同じアーキテクチャ）
 - [kaikei-rs](https://github.com/Ryujiyasu/kaikei-rs) — 日本の税金計算エンジン（Rust）
 
 ## ライセンス
